@@ -6,19 +6,30 @@
 </head>
 <body>
   <div id="app"></div>
+  <div id="parsed_json_api">
+  </div>
 
   <script src="index.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <!-- https://home.openweathermap.org/api_keys -->
   <script>
+
     jQuery(document).ready(function($) {
-      $.ajax(
-        {
-          url : "http://api.wunderground.com/api/Your_Key/geolookup/conditions/q/IA/Cedar_Rapids.json",
-          dataType : "jsonp",
-          success : function(parsed_json) {
-          var location = parsed_json['location']['city'];
-          var temp_f = parsed_json['current_observation']['temp_f'];
-          alert("Current temperature in " + location + " is: " + temp_f);
+
+      var parsedData = $('#parsed_json_api');
+
+      $.ajax({
+        url: "http://api.openweathermap.org/data/2.5/weather?q=London&APPID=c876059794cb9fdf69e440c6021c4fba&units=metric&lang=ru",
+        dataType: 'json',
+        // success: function(data){
+        //   $.each(data, function(i, item){
+        //     parsedData.append('<div>'+i+': '+item+'</div>');
+        //   })
+        // }
+        success: function (data) {
+          data = JSON.stringify(data);
+          parsedData.append('<div>'+data+'</div>');
         }
       });
     });
